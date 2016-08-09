@@ -20,18 +20,52 @@ request.onload = function() {
 
     var currentDate = new Date();
 
-    function timeDiff(articleDate, currentDate) {
-      var publishDate = new Date(articleDate);
-      var diff = new Date(currentDate - publishDate);
-      var yearDiff   = diff.getUTCFullYear() - 1970;
-      var monthDiff  = diff.getUTCMonth();
-      var dayDiff    = diff.getUTCDate() - 1;
-      var hourDiff   = diff.getUTCHours();
-      var minuteDiff = diff.getUTCMinutes();
-      var secondDiff = diff.getUTCSeconds();
+    // function timeDiff(articleDate, currentDate) {
+    //   var publishDate = new Date(articleDate);
+    //   var diff = new Date(currentDate - publishDate);
+    //   var yearDiff   = diff.getUTCFullYear() - 1970;
+    //   var monthDiff  = diff.getUTCMonth();
+    //   var dayDiff    = diff.getUTCDate() - 1;
+    //   var hourDiff   = diff.getUTCHours();
+    //   var minuteDiff = diff.getUTCMinutes();
+    //   var secondDiff = diff.getUTCSeconds();
 
-      var difference = yearDiff + ' years ' + monthDiff + ' months ' + dayDiff + ' days ' + hourDiff + ' hours ' + minuteDiff + ' minutes and ' + secondDiff + ' seconds ago';
+    //   var difference = yearDiff + ' years ' + monthDiff + ' months ' + dayDiff + ' days ' + hourDiff + ' hours ' + minuteDiff + ' minutes and ' + secondDiff + ' seconds ago';
 
+    //   return difference;
+    // }
+
+    // var DateDiff = {
+    //   Days: function(d1, d2) {
+    //     var t2 = d2.getTime();
+    //     var t1 = d1.getTime();
+
+    //     return parseInt((t2-t1)/(24*3600*1000));
+    //   },
+
+    //   Hours: function(d1, d2) {
+    //     var t2 = d2.getTime();
+    //     var t1 = d1.getTime();
+
+    //     return parseInt((t2-t1)/(3600*1000)%24);
+    //   }
+    //   Minutes: function(d1, d2) {
+    //     var t2 = d2.getTime();
+    //     var t1 = d1.getTime();
+
+    //     return parseInt((t2-t1)/(60*1000)%60);
+    //   }
+    // }
+
+    function dateDiff(articleDate, currentDate) {
+      var t1 = new Date(articleDate).getTime();
+      var t2 = currentDate.getTime();
+
+      var days = parseInt((t2-t1)/(24*3600*1000));
+      var hours = parseInt((t2-t1)/(3600*1000)%24);
+      var minutes = parseInt((t2-t1)/(60*1000)%60);
+
+      var difference = days + ' days ' + hours + ' hours and ' + minutes + ' minutes ago';
       return difference;
     }
 
@@ -50,7 +84,7 @@ request.onload = function() {
       title.innerHTML = data[i].title;
       name.innerHTML = data[i].profile.first_name + ' ' + data[i].profile.last_name;
       words.innerHTML = data[i].words;
-      submitted.innerHTML = timeDiff(data[i].publish_at, currentDate);
+      submitted.innerHTML = dateDiff(data[i].publish_at, currentDate);
 
     };
 
