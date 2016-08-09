@@ -3,6 +3,7 @@ document.body.style.backgroundColor = "pink";
 var currentDate = new Date();
 var j = 0;
 var numclicks = 0;
+var articlesPerPage = 10;
 var dataSet;
 var loaded = 0;
 
@@ -19,7 +20,7 @@ function dateDiff(articleDate, currentDate) {
 }
 
 function showData(data) {
-  for (var i = numclicks * 10; i < 10 * (numclicks + 1); i++) {
+  for (var i = numclicks * articlesPerPage; i < articlesPerPage * (numclicks + 1); i++) {
     var table = document.getElementById('articles');
 
     var row = table.insertRow(-1);
