@@ -35,7 +35,6 @@ function showData(data) {
     var submitted = row.insertCell(3);
 
     // Add text to new cells:
-    console.log(i);
     title.innerHTML = data[i].title;
     name.innerHTML = data[i].profile.first_name + ' ' + data[i].profile.last_name;
     words.innerHTML = data[i].words;
@@ -76,27 +75,18 @@ function loadMore() {
   
   else if (numClicks * 10 >= dataSet.length && loaded == 0) {
     loaded = 1;
+    var xmlhttp = new XMLHttpRequest();
+    var url = 'http://localhost:3000/data/more-articles.json';
 
-    var request = new XMLHttpRequest();
-
-    request.open('GET', 'http://localhost:3000/data/more-articles.json', true);
-
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        var data = JSON.parse(request.responseText);
-        dataSet = dataSet.concat(data);
-        showData(dataSet);
-
-      } else {
-        // We reached our target server, but it returned an error
-      }
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var data2 = JSON.parse(xmlhttp.responseText);
+            dataSet = dataSet.concat(data2);
+            showData(dataSet);
+        }
     };
-
-    request.onerror = function() {
-      // There was a connection error of some sort
-    };
-
-    request.send();
+    xmlhttp.open('GET', url, true);
+    xmlhttp.send();
   }
 
   else {
