@@ -5,6 +5,7 @@ var numClicks = 0;
 var articlesPerPage = 10;
 var dataSet;
 var loaded = 0;
+var table = document.getElementById('articles');
 
 function dateDiff(articleDate, currentDate) {
   var t1 = new Date(articleDate).getTime();
@@ -24,8 +25,6 @@ function dateDiff(articleDate, currentDate) {
 
 function showData(data) {
   for (var i = numClicks * articlesPerPage; i < articlesPerPage * (numClicks + 1); i++) {
-    var table = document.getElementById('articles');
-
     var row = table.insertRow(-1);
 
     // Insert new cells (<td> elements) at the "new" <tr> element:
@@ -79,11 +78,11 @@ function loadMore() {
     var url = 'http://localhost:3000/data/more-articles.json';
 
     xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var data2 = JSON.parse(xmlhttp.responseText);
-            dataSet = dataSet.concat(data2);
-            showData(dataSet);
-        }
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        var data2 = JSON.parse(xmlhttp.responseText);
+        dataSet = dataSet.concat(data2);
+        showData(dataSet);
+      }
     };
     xmlhttp.open('GET', url, true);
     xmlhttp.send();
@@ -92,4 +91,28 @@ function loadMore() {
   else {
     showData(dataSet);
   }
+}
+
+var sortByWordsCicks = 0;
+
+function sortByWords(){
+  sortByWordsCicks += 1;
+
+  if (sortByWordsCicks % 2 == 0) {
+    dataSet.sort(function(a, b) {
+      return a.words - b.words;
+    });
+  }
+
+  else {
+    dataSet.sort(function(a, b) {
+      return b.words - a.words;
+    });
+  }
+  
+  while(table.rows.length > 1) {
+    table.deleteRow(1);
+  }
+
+  showData(dataSet);
 }
