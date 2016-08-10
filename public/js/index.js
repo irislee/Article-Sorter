@@ -2,10 +2,31 @@ document.body.style.backgroundColor = "pink";
 
 var currentDate = new Date();
 var numClicks = 0;
-var articlesPerPage = 10;
+var articlesPerLoad = 30;
 var dataSet;
-var loaded = 0;
+var loaded = false;
 var table = document.getElementById('articles');
+
+var request = new XMLHttpRequest();
+
+request.open('GET', 'http://localhost:3000/data/articles.json', true);
+
+request.onload = function() {
+  if (request.status >= 200 && request.status < 400) {
+
+    dataSet = JSON.parse(request.responseText);
+    showData();
+    
+  } else {
+    // We reached our target server, but it returned an error
+  }
+};
+
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+
+request.send(); 
 
 function dateDiff(articleDate, currentDate) {
   var t1 = new Date(articleDate).getTime();
@@ -23,8 +44,8 @@ function dateDiff(articleDate, currentDate) {
   return difference;
 }
 
-function showData(data) {
-  for (var i = numClicks * articlesPerPage; i < articlesPerPage * (numClicks + 1); i++) {
+function showData() {
+  for (var i = numClicks * articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
     var row = table.insertRow(-1);
 
     // Insert new cells (<td> elements) at the "new" <tr> element:
@@ -34,64 +55,64 @@ function showData(data) {
     var submitted = row.insertCell(3);
 
     // Add text to new cells:
-    title.innerHTML = data[i].title;
-    name.innerHTML = data[i].profile.first_name + ' ' + data[i].profile.last_name;
-    words.innerHTML = data[i].words;
-    submitted.innerHTML = dateDiff(data[i].publish_at, currentDate);
+    title.innerHTML = dataSet[i].title;
+    name.innerHTML = dataSet[i].profile.first_name + ' ' + dataSet[i].profile.last_name;
+    words.innerHTML = dataSet[i].words;
+    submitted.innerHTML = dateDiff(dataSet[i].publish_at, currentDate);
   };
 }
 
-var request = new XMLHttpRequest();
+function get(url) {
+  // Return a new promise.
+  return new Promise(function(resolve, reject) {
+    // Do the usual XHR stuff
+    var req = new XMLHttpRequest();
+    req.open('GET', url);
 
-request.open('GET', 'http://localhost:3000/data/articles.json', true);
+    req.onload = function() {
+      if (req.status == 200) {
+        var data = JSON.parse(req.responseText);
+        resolve(data); 
+      }
+      else {
+        reject(Error(req.statusText));
+      }
+    };
 
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
+    req.onerror = function() {
+      reject(Error("Network Error"));
+    };
 
-    dataSet = JSON.parse(request.responseText);
-    showData(dataSet);
-    
-  } else {
-    // We reached our target server, but it returned an error
+    req.send();
+  });
+}
 
-  }
-};
-
-request.onerror = function() {
-  // There was a connection error of some sort
-};
-
-request.send(); 
-
+function loadData() {
+  get('http://localhost:3000/data/more-articles.json').then(function(response) {
+    loaded = true;
+    return dataSet = dataSet.concat(response);
+  }).then(function() {
+    showData();
+  });
+}
 
 function loadMore() {
 
   numClicks += 1;
 
-  if (numClicks * 10 >= dataSet.length && loaded == 1) {
+  if (numClicks * articlesPerLoad >= dataSet.length && loaded == true) {
     document.getElementById('noMoreData').innerHTML = "No more articles to load.";
   }
   
-  else if (numClicks * 10 >= dataSet.length && loaded == 0) {
-    loaded = 1;
-    var xmlhttp = new XMLHttpRequest();
-    var url = 'http://localhost:3000/data/more-articles.json';
-
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        var data2 = JSON.parse(xmlhttp.responseText);
-        dataSet = dataSet.concat(data2);
-        showData(dataSet);
-      }
-    };
-    xmlhttp.open('GET', url, true);
-    xmlhttp.send();
+  else if (numClicks * articlesPerLoad >= dataSet.length && loaded == false) { 
+    loadData();
   }
 
   else {
-    showData(dataSet);
+    showData();
   }
 }
+
 
 var sortByWordsClicks = 0;
 var sortByTimeClicks = 0;
@@ -103,9 +124,15 @@ function clearTableRows() {
 }
 
 function sortByWords(){
+
+  if (loaded == false) {
+    loadData();
+  }
+
   sortByWordsClicks += 1;
 
   if (sortByWordsClicks % 2 == 0) {
+
     dataSet.sort(function(a, b) {
       return a.words - b.words;
     });
@@ -118,7 +145,8 @@ function sortByWords(){
   }
   
   clearTableRows();
-  showData(dataSet);
+  console.log(dataSet.length); //30
+  showData();
 }
 
 function sortByTime(){
@@ -135,7 +163,7 @@ function sortByTime(){
 
       return timeA - timeB;
     });
-    
+
   }
 
   else {
@@ -152,5 +180,5 @@ function sortByTime(){
   }
 
   clearTableRows();
-  showData(dataSet);
+  showData();
 }
