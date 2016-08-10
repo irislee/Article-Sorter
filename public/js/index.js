@@ -93,12 +93,19 @@ function loadMore() {
   }
 }
 
-var sortByWordsCicks = 0;
+var sortByWordsClicks = 0;
+var sortByTimeClicks = 0;
+
+function clearTableRows() {
+  while(table.rows.length > 1) {
+    table.deleteRow(1);
+  }
+}
 
 function sortByWords(){
-  sortByWordsCicks += 1;
+  sortByWordsClicks += 1;
 
-  if (sortByWordsCicks % 2 == 0) {
+  if (sortByWordsClicks % 2 == 0) {
     dataSet.sort(function(a, b) {
       return a.words - b.words;
     });
@@ -110,9 +117,40 @@ function sortByWords(){
     });
   }
   
-  while(table.rows.length > 1) {
-    table.deleteRow(1);
+  clearTableRows();
+  showData(dataSet);
+}
+
+function sortByTime(){
+  sortByTimeClicks += 1;
+
+  if (sortByTimeClicks % 2 == 0) {
+    dataSet.sort(function(a, b) {
+
+      var timeA = new Date(a.publish_at);
+      timeA = timeA.getTime();
+
+      var timeB = new Date(b.publish_at);
+      timeB = timeB.getTime();
+
+      return timeA - timeB;
+    });
+    
   }
 
+  else {
+    dataSet.sort(function(a, b) {
+
+      var timeA = new Date(a.publish_at);
+      timeA = timeA.getTime();
+
+      var timeB = new Date(b.publish_at);
+      timeB = timeB.getTime();
+
+      return timeB - timeA;
+    });
+  }
+
+  clearTableRows();
   showData(dataSet);
 }
