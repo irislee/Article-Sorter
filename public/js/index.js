@@ -59,6 +59,21 @@ function updateArticlesNum() {
   el.outerHTML = string;
 }
 
+// window.onscroll = function(){
+//   var btn = document.createElement('button');
+//   var node = document.createTextNode('Scroll to Top');
+//   btn.appendChild(node);
+//   document.body.appendChild(btn);  
+// };
+
+if (window.pageYOffset > 0) {
+  console.log('hi!');
+}
+
+function scrollToTop() {
+  window.scrollTo(0,0);
+}
+
 function dateDiff(articleDate, currentDate) {
   var t1 = new Date(articleDate).getTime();
   var t2 = currentDate.getTime();

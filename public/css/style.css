@@ -1,5 +1,5 @@
 body {
-  font-size: 11px;
+  font-size: 14px;
 }
 
 table {
@@ -12,8 +12,8 @@ table {
 th {
   background: #862231;
   color: white;
-  font-size: 12px;
-  height: 80px;
+  font-size: 14px;
+  height: 60px;
 }
 
 th:first-child {
@@ -75,24 +75,46 @@ td:nth-child(5) {
   width: 120px;
 }
 
+div {
+  max-width: 1000px;
+  /*text-align: center;*/
+  width: 90%;
+  margin: 0 auto;
+}
+
+button {
+  /*display: block;*/
+  /*border: none;*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  /*max-width: 1000px;*/
+}
+button:focus {outline:0;}
+
 #messageArea {
+  margin: 20px auto;
+  margin-bottom: 20px;
   color: #862231;
   font-size: 16px;
-  margin: 20px auto;
-  max-width: 1000px;
-  text-align: center;
-  width: 90%;
 }
 
 #load {
-  background-color: #706677;
-  border-radius: 5px;
+  background-color: white;
   border: none;
-  color: white;
-  display: block;
+  color: grey;
   height: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1000px;
-  width: 90%;
+  font-size: 20px;
+  margin-left: 120px;
+}
+
+#scroll {
+  position:fixed;
+  bottom: 22px;
+  left: 5%;
+  /*left: 40px;*/
+  font-size: 30px;
+  height: 40px;
+  color: grey;
+  background-color: white;
+  border:none;
 }
