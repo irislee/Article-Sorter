@@ -77,29 +77,28 @@ td:nth-child(5) {
 
 div {
   max-width: 1000px;
-  /*text-align: center;*/
   width: 90%;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
+  margin-left: 120px;
 }
 
-button {
-  /*display: block;*/
-  /*border: none;*/
-  /*margin-left: auto;*/
-  /*margin-right: auto;*/
-  /*max-width: 1000px;*/
+button:focus {
+  outline: 0;
 }
-button:focus {outline:0;}
+
+div > p {
+  margin-left: 120px;
+}
 
 #messageArea {
   margin: 20px auto;
-  margin-bottom: 20px;
-  color: #862231;
+  margin-top: 20;
+  color: grey;
   font-size: 16px;
 }
 
 #load {
-  background-color: white;
+  background-color: transparent;
   border: none;
   color: grey;
   height: 40px;
@@ -111,10 +110,9 @@ button:focus {outline:0;}
   position:fixed;
   bottom: 22px;
   left: 5%;
-  /*left: 40px;*/
   font-size: 30px;
   height: 40px;
   color: grey;
-  background-color: white;
+  background-color: transparent;
   border:none;
 }

@@ -160,13 +160,14 @@ function loadMore() {
   if (numClicks * articlesPerLoad >= dataSet.length && loaded == true) {
 
     var para = document.createElement('p');
-    para.setAttribute('id', 'messageLoaded');
+    // para.setAttribute('id', 'messageLoaded');
     var node = document.createTextNode('No more articles to load.');
-    var noMoreMessage = para.appendChild(node);
+    para.appendChild(node);
 
-    var button = document.getElementById('load');
+    var element = document.getElementById('messageArea');
+    var child = document.getElementById('load');
   
-    document.getElementById('messageArea').replaceChild(noMoreMessage,button);
+    element.replaceChild(para,child);
   }
 
   else if ((numClicks * articlesPerLoad) >= dataSet.length && loaded == false) {
