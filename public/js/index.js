@@ -129,19 +129,19 @@ function loadData(doMyThing) {
 
 }
 
-function loadMore() {
+function loadMore() { 
 
-  if ((numClicks+1) * articlesPerLoad >= dataSet.length && loaded == true) {
+  numClicks += 1;
+
+  if (numClicks * articlesPerLoad >= dataSet.length && loaded == true) {
     document.getElementById('noMoreData').innerHTML = "No more articles to load.";
   }
-  
-  else if (numClicks * articlesPerLoad >= dataSet.length && loaded == false) { 
-    numClicks += 1;
+
+  else if ((numClicks * articlesPerLoad) >= dataSet.length && loaded == false) { 
     loadData(showData);
   }
 
   else {
-    numClicks += 1;
     showData();
   }
 }
@@ -157,7 +157,7 @@ function loadSorted () {
   numClicks = 0; 
   for (var i = 0; i <= artOnPage; i++) {
     showData();
-    numClicks += 1;
+    // numClicks += 1;
   };
   numClicks = artOnPage;
 }
