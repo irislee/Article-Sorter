@@ -78,12 +78,14 @@ function showData() {
     var row = table.insertRow(-1);
 
     // Insert new cells (<td> elements) at the "new" <tr> element:
-    var title = row.insertCell(0);
-    var name = row.insertCell(1);
-    var words = row.insertCell(2);
-    var submitted = row.insertCell(3);
+    var image = row.insertCell(0)
+    var title = row.insertCell(1);
+    var name = row.insertCell(2);
+    var words = row.insertCell(3);
+    var submitted = row.insertCell(4);
 
     // Add text to new cells:
+    image.innerHTML = '<img width="100" height="63" src="' + dataSet[i].image + '" >';
     title.innerHTML = dataSet[i].title;
     name.innerHTML = dataSet[i].profile.first_name + ' ' + dataSet[i].profile.last_name;
     words.innerHTML = dataSet[i].words;
