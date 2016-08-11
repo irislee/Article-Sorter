@@ -146,14 +146,6 @@ function loadSorted () {
   numClicks = artOnPage;
 }
 
-function sortWordsZA () {
-  dataSet.sort(function(a, b) {
-    return b.words - a.words;
-  });
-
-  loadSorted();
-}
-
 function sortWordsAZ () {
   dataSet.sort(function(a, b) {
     return a.words - b.words;
@@ -162,9 +154,15 @@ function sortWordsAZ () {
   loadSorted();
 }
 
+function sortWordsZA () {
+  dataSet.sort(function(a, b) {
+    return b.words - a.words;
+  });
 
-function sortByWords(){
+  loadSorted();
+}
 
+function sortByWords (){
   if (loaded == false) {
     clearTableRows();
     loadData(sortWordsZA);
@@ -173,57 +171,62 @@ function sortByWords(){
     sortByWordsClicks += 1;
 
     if (sortByWordsClicks % 2 == 0) {
-
       clearTableRows();
       sortWordsZA();
-
-    // dataSet.sort(function(a, b) {
-    //   return a.words - b.words;
-    // });
-    // console.log('2 ' + dataSet.length);
     }
-
     else {
       clearTableRows();
       sortWordsAZ();
-    // dataSet.sort(function(a, b) {
-    //   return b.words - a.words;
-    // });
-    // console.log('3 ' + dataSet.length);
     }
   }
 }
 
+function sortTimeAZ () {
+  dataSet.sort(function(a, b) {
+
+    var timeA = new Date(a.publish_at);
+    timeA = timeA.getTime();
+
+    var timeB = new Date(b.publish_at);
+    timeB = timeB.getTime();
+
+    return timeA - timeB;
+  });
+
+  loadSorted();
+}
+
+function sortTimeZA () {
+  dataSet.sort(function(a, b) {
+
+    var timeA = new Date(a.publish_at);
+    timeA = timeA.getTime();
+
+    var timeB = new Date(b.publish_at);
+    timeB = timeB.getTime();
+
+    return timeB - timeA;
+  });
+
+  loadSorted();
+}
+
 function sortByTime(){
-  sortByTimeClicks += 1;
-
-  if (sortByTimeClicks % 2 == 0) {
-    dataSet.sort(function(a, b) {
-
-      var timeA = new Date(a.publish_at);
-      timeA = timeA.getTime();
-
-      var timeB = new Date(b.publish_at);
-      timeB = timeB.getTime();
-
-      return timeA - timeB;
-    });
-
+  if (loaded == false) {
+    clearTableRows();
+    loadData(sortWordsZA);
   }
-
   else {
-    dataSet.sort(function(a, b) {
+    sortByTimeClicks += 1;
 
-      var timeA = new Date(a.publish_at);
-      timeA = timeA.getTime();
+    if (sortByTimeClicks % 2 == 0) {
+      clearTableRows();
+      sortTimeZA();
+    }
 
-      var timeB = new Date(b.publish_at);
-      timeB = timeB.getTime();
-
-      return timeB - timeA;
-    });
+    else {
+      clearTableRows();
+      sortTimeAZ();
+    }
   }
-
-  clearTableRows();
-  showData();
 }
