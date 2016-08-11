@@ -13,8 +13,8 @@ request.open('GET', 'http://localhost:3000/data/articles.json', true);
 
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
-
     dataSet = JSON.parse(request.responseText);
+    updateArticlesNum();
     showData();
     if (typeof(Storage) !== "undefined") {
 
@@ -53,6 +53,12 @@ request.onerror = function() {
 
 request.send(); 
 
+function updateArticlesNum() {
+  var string = '<th colspan="2" id="updateArticlesNum">UNPUBLISHED ARTICLES ' + ' (' + dataSet.length + ')' + '</th>';
+  var el = document.getElementById('updateArticlesNum');
+  el.outerHTML = string;
+}
+
 function dateDiff(articleDate, currentDate) {
   var t1 = new Date(articleDate).getTime();
   var t2 = currentDate.getTime();
@@ -70,8 +76,7 @@ function dateDiff(articleDate, currentDate) {
 }
 
 function showData() {
-  
-  // for (var i = numClicks * articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
+
   for (var i = numClicks*articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
     var row = table.insertRow(-1);
 
@@ -87,10 +92,8 @@ function showData() {
     var linkEnd = '</a>';
 
     // Add text to new cells:
-    // image.innerHTML = '<img width="100" height="63" src="' + dataSet[i].image + '">';
     image.innerHTML = link + '<img width="100" height="63" src="' + dataSet[i].image + '" >' + linkEnd;
     title.innerHTML = link + dataSet[i].title + linkEnd;
-    // title.innerHTML = dataSet[i].title;
     name.innerHTML = dataSet[i].profile.first_name + ' ' + dataSet[i].profile.last_name;
     words.innerHTML = dataSet[i].words;
     submitted.innerHTML = dateDiff(dataSet[i].publish_at, currentDate);
@@ -130,12 +133,13 @@ function loadData(doMyThing) {
     return dataSet = dataSet.concat(response);
   }).then(function() {
     doMyThing();
+  }).then(function() {
+    updateArticlesNum();
   });
 
 }
 
 function loadMore() { 
-
   numClicks += 1;
 
   if (numClicks * articlesPerLoad >= dataSet.length && loaded == true) {
@@ -150,7 +154,7 @@ function loadMore() {
     document.getElementById('messageArea').replaceChild(noMoreMessage,button);
   }
 
-  else if ((numClicks * articlesPerLoad) >= dataSet.length && loaded == false) { 
+  else if ((numClicks * articlesPerLoad) >= dataSet.length && loaded == false) {
     loadData(showData);
   }
 
