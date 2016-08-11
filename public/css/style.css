@@ -71,3 +71,17 @@ td:nth-child(5) {
   width: 120px;
   text-align: center;
 }
+
+#load {
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  display: block;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  max-width: 1000px;
+  background-color: #706677;
+}
