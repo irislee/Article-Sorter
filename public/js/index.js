@@ -1,6 +1,6 @@
 var currentDate = new Date();
 var numClicks = 0;
-var articlesPerLoad = 10;
+var articlesPerLoad = 30;
 var dataSet;
 var loaded = false;
 var table = document.getElementById('articles');
@@ -132,7 +132,15 @@ function loadMore() {
   numClicks += 1;
 
   if (numClicks * articlesPerLoad >= dataSet.length && loaded == true) {
-    document.getElementById('noMoreData').innerHTML = "No more articles to load.";
+
+    var para = document.createElement('p');
+    para.setAttribute('id', 'messageLoaded');
+    var node = document.createTextNode('No more articles to load.');
+    var noMoreMessage = para.appendChild(node);
+
+    var button = document.getElementById('load');
+  
+    document.getElementById('messageArea').replaceChild(noMoreMessage,button);
   }
 
   else if ((numClicks * articlesPerLoad) >= dataSet.length && loaded == false) { 
