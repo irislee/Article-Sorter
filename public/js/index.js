@@ -2,7 +2,7 @@ document.body.style.backgroundColor = "pink";
 
 var currentDate = new Date();
 var numClicks = 0;
-var articlesPerLoad = 30;
+var articlesPerLoad = 10;
 var dataSet;
 var loaded = false;
 var table = document.getElementById('articles');
@@ -45,7 +45,9 @@ function dateDiff(articleDate, currentDate) {
 }
 
 function showData() {
-  for (var i = numClicks * articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
+
+  // for (var i = numClicks * articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
+  for (var i = numClicks*articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
     var row = table.insertRow(-1);
 
     // Insert new cells (<td> elements) at the "new" <tr> element:
@@ -54,6 +56,8 @@ function showData() {
     var words = row.insertCell(2);
     var submitted = row.insertCell(3);
 
+    console.log(numClicks);
+
     // Add text to new cells:
     title.innerHTML = dataSet[i].title;
     name.innerHTML = dataSet[i].profile.first_name + ' ' + dataSet[i].profile.last_name;
@@ -61,6 +65,10 @@ function showData() {
     submitted.innerHTML = dateDiff(dataSet[i].publish_at, currentDate);
   };
 }
+
+var numOnPage = document.getElementById('articles').rows.length;
+
+
 
 function get(url) {
   // Return a new promise.
@@ -87,32 +95,37 @@ function get(url) {
   });
 }
 
-function loadData() {
+function loadData(doMyThing) {
+
   get('http://localhost:3000/data/more-articles.json').then(function(response) {
     loaded = true;
     return dataSet = dataSet.concat(response);
   }).then(function() {
-    showData();
+    doMyThing();
   });
+
 }
 
 function loadMore() {
 
   numClicks += 1;
-
-  if (numClicks * articlesPerLoad >= dataSet.length && loaded == true) {
+  console.log(numClicks);
+  console.log(loaded);
+  if ((numClicks) * articlesPerLoad >= dataSet.length && loaded == true) {
     document.getElementById('noMoreData').innerHTML = "No more articles to load.";
   }
   
   else if (numClicks * articlesPerLoad >= dataSet.length && loaded == false) { 
-    loadData();
+    loadData(showData);
+    console.log('why are you elseifing');
+    //showData();
   }
 
   else {
     showData();
+    console.log('data length' + dataSet.length);
   }
 }
-
 
 var sortByWordsClicks = 0;
 var sortByTimeClicks = 0;
@@ -123,30 +136,62 @@ function clearTableRows() {
   }
 }
 
+function loadSorted () {
+  var artOnPage = numClicks;
+  numClicks = 0; 
+  for (var i = 0; i <= artOnPage; i++) {
+    showData();
+    numClicks += 1;
+  };
+  numClicks = artOnPage;
+}
+
+function sortWordsZA () {
+  dataSet.sort(function(a, b) {
+    return b.words - a.words;
+  });
+
+  loadSorted();
+}
+
+function sortWordsAZ () {
+  dataSet.sort(function(a, b) {
+    return a.words - b.words;
+  });
+
+  loadSorted();
+}
+
+
 function sortByWords(){
 
   if (loaded == false) {
-    loadData();
+    clearTableRows();
+    loadData(sortWordsZA);
   }
+  else{
+    sortByWordsClicks += 1;
 
-  sortByWordsClicks += 1;
+    if (sortByWordsClicks % 2 == 0) {
 
-  if (sortByWordsClicks % 2 == 0) {
+      clearTableRows();
+      sortWordsZA();
 
-    dataSet.sort(function(a, b) {
-      return a.words - b.words;
-    });
+    // dataSet.sort(function(a, b) {
+    //   return a.words - b.words;
+    // });
+    // console.log('2 ' + dataSet.length);
+    }
+
+    else {
+      clearTableRows();
+      sortWordsAZ();
+    // dataSet.sort(function(a, b) {
+    //   return b.words - a.words;
+    // });
+    // console.log('3 ' + dataSet.length);
+    }
   }
-
-  else {
-    dataSet.sort(function(a, b) {
-      return b.words - a.words;
-    });
-  }
-  
-  clearTableRows();
-  console.log(dataSet.length); //30
-  showData();
 }
 
 function sortByTime(){
