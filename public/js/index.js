@@ -16,7 +16,28 @@ request.onload = function() {
 
     dataSet = JSON.parse(request.responseText);
     showData();
-    
+    if (typeof(Storage) !== "undefined") {
+
+      if(localStorage.sortStatus == 1){
+        clearTableRows();
+        loadData(sortWordsAZ);
+      }
+      else if(localStorage.sortStatus == 2){
+        clearTableRows();
+        loadData(sortWordsZA);
+      }
+      else if(localStorage.sortStatus == 3){
+        clearTableRows();
+        loadData(sortTimeAZ);
+      }
+      else if(localStorage.sortStatus == 4){
+        clearTableRows();
+        loadData(sortTimeZA);
+      }
+    } 
+    else {
+      alert("Sorry, your browser does not support web storage...");
+    }
   } else {
     // We reached our target server, but it returned an error
   }
@@ -45,7 +66,7 @@ function dateDiff(articleDate, currentDate) {
 }
 
 function showData() {
-
+  
   // for (var i = numClicks * articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
   for (var i = numClicks*articlesPerLoad; i < articlesPerLoad * (numClicks + 1); i++) {
     var row = table.insertRow(-1);
@@ -56,8 +77,6 @@ function showData() {
     var words = row.insertCell(2);
     var submitted = row.insertCell(3);
 
-    console.log(numClicks);
-
     // Add text to new cells:
     title.innerHTML = dataSet[i].title;
     name.innerHTML = dataSet[i].profile.first_name + ' ' + dataSet[i].profile.last_name;
@@ -65,10 +84,6 @@ function showData() {
     submitted.innerHTML = dateDiff(dataSet[i].publish_at, currentDate);
   };
 }
-
-var numOnPage = document.getElementById('articles').rows.length;
-
-
 
 function get(url) {
   // Return a new promise.
@@ -108,22 +123,18 @@ function loadData(doMyThing) {
 
 function loadMore() {
 
-  numClicks += 1;
-  console.log(numClicks);
-  console.log(loaded);
-  if ((numClicks) * articlesPerLoad >= dataSet.length && loaded == true) {
+  if ((numClicks+1) * articlesPerLoad >= dataSet.length && loaded == true) {
     document.getElementById('noMoreData').innerHTML = "No more articles to load.";
   }
   
   else if (numClicks * articlesPerLoad >= dataSet.length && loaded == false) { 
+    numClicks += 1;
     loadData(showData);
-    console.log('why are you elseifing');
-    //showData();
   }
 
   else {
+    numClicks += 1;
     showData();
-    console.log('data length' + dataSet.length);
   }
 }
 
@@ -147,6 +158,7 @@ function loadSorted () {
 }
 
 function sortWordsAZ () {
+  localStorage.sortStatus = 1;
   dataSet.sort(function(a, b) {
     return a.words - b.words;
   });
@@ -155,6 +167,7 @@ function sortWordsAZ () {
 }
 
 function sortWordsZA () {
+  localStorage.sortStatus = 2;
   dataSet.sort(function(a, b) {
     return b.words - a.words;
   });
@@ -182,6 +195,7 @@ function sortByWords (){
 }
 
 function sortTimeAZ () {
+  localStorage.sortStatus = 3;
   dataSet.sort(function(a, b) {
 
     var timeA = new Date(a.publish_at);
@@ -197,6 +211,7 @@ function sortTimeAZ () {
 }
 
 function sortTimeZA () {
+  localStorage.sortStatus = 4;
   dataSet.sort(function(a, b) {
 
     var timeA = new Date(a.publish_at);
@@ -212,9 +227,10 @@ function sortTimeZA () {
 }
 
 function sortByTime(){
+
   if (loaded == false) {
     clearTableRows();
-    loadData(sortWordsZA);
+    loadData(sortTimeZA);
   }
   else {
     sortByTimeClicks += 1;
