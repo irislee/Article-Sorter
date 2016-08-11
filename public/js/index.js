@@ -1,5 +1,3 @@
-document.body.style.backgroundColor = "pink";
-
 var currentDate = new Date();
 var numClicks = 0;
 var articlesPerLoad = 10;

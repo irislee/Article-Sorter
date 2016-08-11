@@ -1,0 +1,73 @@
+body {
+  font-size: 11px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  max-width: 1000px;
+  border: 1px solid #D8D8D8;
+}
+th {
+  background: #862231;
+  font-size: 12px;
+  height: 80px;
+  color: white;
+}
+
+th:first-child {
+  text-align: left;
+  padding-left: 20px;
+}
+th a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin-top: 80px;
+  color: white;
+  text-decoration: none;
+}
+
+th a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+tr {
+  /*height: 83px;*/
+  vertical-align: middle;
+}
+
+tr:nth-child(odd){
+  background-color: #D8D8D8;
+}
+
+/*image*/
+td:first-child {
+  width: 120px;
+  vertical-align: middle;
+}
+
+/*title*/
+td:nth-child(2) {
+  
+}
+
+/*author*/
+td:nth-child(3) {
+  width: 120px;
+  text-align: center;
+}
+
+/*words*/
+td:nth-child(4) {
+  width: 120px;
+  text-align: center;
+}
+
+/*submitted*/
+td:nth-child(5) {
+  width: 120px;
+  text-align: center;
+}
