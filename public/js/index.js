@@ -6,6 +6,8 @@ var articlesPerLoad = 10;
 var dataSet;
 var loaded = false;
 var table = document.getElementById('articles');
+var sortByWordsClicks = 0;
+var sortByTimeClicks = 0;
 
 var request = new XMLHttpRequest();
 
@@ -18,21 +20,25 @@ request.onload = function() {
     showData();
     if (typeof(Storage) !== "undefined") {
 
-      if(localStorage.sortStatus == 1){
+      if(localStorage.sortStatus == "wordsAZ"){
         clearTableRows();
         loadData(sortWordsAZ);
+        sortByWordsClicks = 1;
       }
-      else if(localStorage.sortStatus == 2){
+      else if(localStorage.sortStatus == "wordsZA"){
         clearTableRows();
         loadData(sortWordsZA);
+        sortByWordsClicks = 1;
       }
-      else if(localStorage.sortStatus == 3){
+      else if(localStorage.sortStatus == "timeAZ"){
         clearTableRows();
         loadData(sortTimeAZ);
+        sortByTimeClicks = 1;
       }
-      else if(localStorage.sortStatus == 4){
+      else if(localStorage.sortStatus == "timeZA"){
         clearTableRows();
         loadData(sortTimeZA);
+        sortByTimeClicks = 1;
       }
     } 
     else {
@@ -138,9 +144,6 @@ function loadMore() {
   }
 }
 
-var sortByWordsClicks = 0;
-var sortByTimeClicks = 0;
-
 function clearTableRows() {
   while(table.rows.length > 1) {
     table.deleteRow(1);
@@ -158,7 +161,7 @@ function loadSorted () {
 }
 
 function sortWordsAZ () {
-  localStorage.sortStatus = 1;
+  localStorage.sortStatus = "wordsAZ"; 
   dataSet.sort(function(a, b) {
     return a.words - b.words;
   });
@@ -167,7 +170,7 @@ function sortWordsAZ () {
 }
 
 function sortWordsZA () {
-  localStorage.sortStatus = 2;
+  localStorage.sortStatus = "wordsZA";
   dataSet.sort(function(a, b) {
     return b.words - a.words;
   });
@@ -195,7 +198,7 @@ function sortByWords (){
 }
 
 function sortTimeAZ () {
-  localStorage.sortStatus = 3;
+  localStorage.sortStatus = "timeAZ";
   dataSet.sort(function(a, b) {
 
     var timeA = new Date(a.publish_at);
@@ -211,7 +214,7 @@ function sortTimeAZ () {
 }
 
 function sortTimeZA () {
-  localStorage.sortStatus = 4;
+  localStorage.sortStatus = "timeZA";
   dataSet.sort(function(a, b) {
 
     var timeA = new Date(a.publish_at);
