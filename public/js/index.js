@@ -1,6 +1,6 @@
 var currentDate = new Date();
 var numClicks = 0;
-var articlesPerLoad = 30;
+var articlesPerLoad = 10;
 var dataSet;
 var loaded = false;
 var table = document.getElementById('articles');
@@ -82,12 +82,19 @@ function showData() {
     var words = row.insertCell(3);
     var submitted = row.insertCell(4);
 
+    // article link
+    var link = '<a href ="' + dataSet[i].url + '" target="_blank">';
+    var linkEnd = '</a>';
+
     // Add text to new cells:
-    image.innerHTML = '<img width="100" height="63" src="' + dataSet[i].image + '" >';
-    title.innerHTML = dataSet[i].title;
+    // image.innerHTML = '<img width="100" height="63" src="' + dataSet[i].image + '">';
+    image.innerHTML = link + '<img width="100" height="63" src="' + dataSet[i].image + '" >' + linkEnd;
+    title.innerHTML = link + dataSet[i].title + linkEnd;
+    // title.innerHTML = dataSet[i].title;
     name.innerHTML = dataSet[i].profile.first_name + ' ' + dataSet[i].profile.last_name;
     words.innerHTML = dataSet[i].words;
     submitted.innerHTML = dateDiff(dataSet[i].publish_at, currentDate);
+
   };
 }
 

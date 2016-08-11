@@ -49,8 +49,12 @@ td:first-child {
 }
 
 /*title*/
-td:nth-child(2) {
-  
+td:nth-child(2) a {
+  color: black;
+  text-decoration: none;
+}
+td:nth-child(2) a:visited {
+  color: black;
 }
 
 /*author*/
