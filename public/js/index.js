@@ -51,23 +51,14 @@ request.onerror = function() {
   // There was a connection error of some sort
 };
 
-request.send(); 
+request.send();
 
 function updateArticlesNum() {
-  var string = '<th colspan="2" id="updateArticlesNum">UNPUBLISHED ARTICLES ' + ' (' + dataSet.length + ')' + '</th>';
-  var el = document.getElementById('updateArticlesNum');
-  el.outerHTML = string;
+  document.getElementById("updateArticlesNum").innerHTML = 'Unpublished Articles (' + dataSet.length + ')'; 
 }
 
-// window.onscroll = function(){
-//   var btn = document.createElement('button');
-//   var node = document.createTextNode('Scroll to Top');
-//   btn.appendChild(node);
-//   document.body.appendChild(btn);  
-// };
-
-if (window.pageYOffset > 0) {
-  console.log('hi!');
+function updateArrow(id, string) {
+  document.getElementById(id).innerHTML = string; 
 }
 
 function scrollToTop() {
@@ -200,7 +191,7 @@ function sortWordsAZ () {
   dataSet.sort(function(a, b) {
     return a.words - b.words;
   });
-  document.getElementById("words").innerHTML = "WORDS &#8595;";
+  updateArrow('words', 'Words &#8595;');
   loadSorted();
 }
 
@@ -209,12 +200,12 @@ function sortWordsZA () {
   dataSet.sort(function(a, b) {
     return b.words - a.words;
   });
-  document.getElementById("words").innerHTML = "WORDS &#8593;";
+  updateArrow('words', 'Words &#8593');
   loadSorted();
 }
 
 function sortByWords (){
-  document.getElementById("submitted").innerHTML = "SUBMITTED &#8597;";
+  document.getElementById("submitted").innerHTML = "Submitted &#8597;";
   if (loaded == false) {
     clearTableRows();
     loadData(sortWordsZA);
@@ -245,7 +236,7 @@ function sortTimeAZ () {
 
     return timeA - timeB;
   });
-  document.getElementById("submitted").innerHTML = "SUBMITTED &#8595;";
+  updateArrow('submitted', 'Submitted &#8595;');
   loadSorted();
 }
 
@@ -261,12 +252,12 @@ function sortTimeZA () {
 
     return timeB - timeA;
   });
-  document.getElementById("submitted").innerHTML = "SUBMITTED &#8593;";
+  updateArrow('submitted', 'Submitted &#8593;');
   loadSorted();
 }
 
 function sortByTime(){
-  document.getElementById("words").innerHTML = "WORDS &#8597;";
+  document.getElementById("words").innerHTML = "Words &#8597;";
   if (loaded == false) {
     clearTableRows();
     loadData(sortTimeZA);
