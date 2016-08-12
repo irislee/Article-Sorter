@@ -1,16 +1,28 @@
-body {
-  font-size: 14px;
-}
-
 table {
-  border: 1px solid #D8D8D8;
+  border: 1px solid #edf0f5;
   margin-left: auto;
   margin-right: auto;
   max-width: 1000px;
   width: 90%;
+  font-size:11px;
+  border-collapse: collapse;
 }
+
+td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+img {
+  display: block;
+}
+
 th {
-  background: #862231;
+  background-color: #5A993B; 
+  background: -webkit-linear-gradient(#6AA34E, #5A993B 50%); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#6AA34E, #5A993B 50%); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#6AA34E, #5A993B 50%); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#6AA34E, #5A993B 50%); /* Standard syntax */
   color: white;
   font-size: 14px;
   height: 60px;
@@ -39,17 +51,19 @@ tr {
 }
 
 tr:nth-child(odd){
-  background-color: #D8D8D8;
+  background-color: #edf0f5;
 }
 
 /*image*/
 td:first-child {
   vertical-align: middle;
+  padding-left: 20px;
   width: 120px;
 }
 
 /*title*/
 td:nth-child(2) a {
+  font-size:14px;
   color: black;
   text-decoration: none;
 }
@@ -61,6 +75,7 @@ td:nth-child(2) a:visited {
 td:nth-child(3) {
   text-align: center;
   width: 120px;
+  font-size:12px;
 }
 
 /*words*/
@@ -79,7 +94,7 @@ div {
   max-width: 1000px;
   width: 90%;
   /*margin: 0 auto;*/
-  margin-left: 120px;
+  margin-left: 140px;
 }
 
 button:focus {
@@ -87,23 +102,23 @@ button:focus {
 }
 
 div > p {
-  margin-left: 120px;
+  margin-left: 140px;
 }
 
 #messageArea {
   margin: 20px auto;
   margin-top: 20;
-  color: grey;
+  color: #AAACAF;
   font-size: 16px;
 }
 
 #load {
   background-color: transparent;
   border: none;
-  color: grey;
+  color: #AAACAF;
   height: 40px;
   font-size: 20px;
-  margin-left: 120px;
+  margin-left: 140px;
 }
 
 #scroll {
@@ -112,7 +127,7 @@ div > p {
   left: 5%;
   font-size: 30px;
   height: 40px;
-  color: grey;
+  color: #AAACAF;
   background-color: transparent;
   border:none;
 }
