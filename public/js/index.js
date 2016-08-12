@@ -190,6 +190,7 @@ function loadSorted () {
   numClicks = 0; 
   for (var i = 0; i <= artOnPage; i++) {
     showData();
+    numClicks+=1;
   };
   numClicks = artOnPage;
 }
@@ -284,3 +285,12 @@ function sortByTime(){
     }
   }
 }
+
+window.onscroll = function() {
+  if (window.pageYOffset >= 100) {
+    document.getElementById('scroll').style.visibility="visible";
+  }
+  else {
+    document.getElementById('scroll').style.visibility="hidden";
+  }
+};

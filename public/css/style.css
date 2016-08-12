@@ -17,6 +17,10 @@ img {
   display: block;
 }
 
+tr:first-child {
+  border: 1px solid #388213;
+}
+
 th {
   background-color: #5A993B; 
   background: -webkit-linear-gradient(#6AA34E, #5A993B 50%); /* For Safari 5.1 to 6.0 */
@@ -122,6 +126,7 @@ div > p {
 }
 
 #scroll {
+  visibility: hidden;
   position:fixed;
   bottom: 22px;
   left: 5%;
