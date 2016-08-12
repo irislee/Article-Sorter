@@ -151,7 +151,6 @@ function loadMore() {
   if (numClicks * articlesPerLoad >= dataSet.length && loaded == true) {
 
     var para = document.createElement('p');
-    // para.setAttribute('id', 'messageLoaded');
     var node = document.createTextNode('No more articles to load.');
     para.appendChild(node);
 
