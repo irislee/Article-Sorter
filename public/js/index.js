@@ -190,7 +190,6 @@ function loadSorted () {
   numClicks = 0; 
   for (var i = 0; i <= artOnPage; i++) {
     showData();
-    // numClicks += 1;
   };
   numClicks = artOnPage;
 }
@@ -200,7 +199,7 @@ function sortWordsAZ () {
   dataSet.sort(function(a, b) {
     return a.words - b.words;
   });
-
+  document.getElementById("words").innerHTML = "WORDS &#8595;";
   loadSorted();
 }
 
@@ -209,11 +208,12 @@ function sortWordsZA () {
   dataSet.sort(function(a, b) {
     return b.words - a.words;
   });
-
+  document.getElementById("words").innerHTML = "WORDS &#8593;";
   loadSorted();
 }
 
 function sortByWords (){
+  document.getElementById("submitted").innerHTML = "SUBMITTED &#8597;";
   if (loaded == false) {
     clearTableRows();
     loadData(sortWordsZA);
@@ -244,7 +244,7 @@ function sortTimeAZ () {
 
     return timeA - timeB;
   });
-
+  document.getElementById("submitted").innerHTML = "SUBMITTED &#8595;";
   loadSorted();
 }
 
@@ -260,12 +260,12 @@ function sortTimeZA () {
 
     return timeB - timeA;
   });
-
+  document.getElementById("submitted").innerHTML = "SUBMITTED &#8593;";
   loadSorted();
 }
 
 function sortByTime(){
-
+  document.getElementById("words").innerHTML = "WORDS &#8597;";
   if (loaded == false) {
     clearTableRows();
     loadData(sortTimeZA);
