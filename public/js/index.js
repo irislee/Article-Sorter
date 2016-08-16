@@ -204,6 +204,7 @@ function sortWordsZA () {
 }
 
 function sortByWords (){
+  // updateArrow('submitted', 'Submitted &#8597;');
   document.getElementById("submitted").innerHTML = "Submitted &#8597;";
   if (loaded == false) {
     clearTableRows();
@@ -256,6 +257,7 @@ function sortTimeZA () {
 }
 
 function sortByTime(){
+  // updateArrow('words', 'Words &#8597;');
   document.getElementById("words").innerHTML = "Words &#8597;";
   if (loaded == false) {
     clearTableRows();
