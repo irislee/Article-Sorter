@@ -9,7 +9,7 @@ var sortByTimeClicks = 0;
 
 var request = new XMLHttpRequest();
 
-request.open('GET', 'http://localhost:3000/data/articles.json', true);
+request.open('GET', 'http://localhost:5000/data/articles.json', true);
 
 request.onload = function() {
   if (request.status >= 200 && request.status < 400) {
@@ -134,7 +134,7 @@ function get(url) {
 
 function loadData(doMyThing) {
 
-  get('http://localhost:3000/data/more-articles.json').then(function(response) {
+  get('http://localhost:5000/data/more-articles.json').then(function(response) {
     loaded = true;
     return dataSet = dataSet.concat(response);
   }).then(function() {
