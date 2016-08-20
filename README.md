@@ -1,4 +1,6 @@
-# mic
+# Article Sorter
+
+See it [here](https://article-sorter.herokuapp.com/) or follow instructions below.
 
 ## How to install & get started
 1. Clone or downlod the repo
